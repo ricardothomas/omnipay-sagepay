@@ -89,6 +89,8 @@ class DirectAuthorizeRequest extends AbstractRequest
             $data['surchargeXml'] = $this->getSurchargeXml();
         }
 
+        $data = $this->getTokenData($data);
+
         return $data;
     }
 
@@ -153,6 +155,9 @@ class DirectAuthorizeRequest extends AbstractRequest
             }
 
             $data['StoreToken'] = $storeToken;
+        } elseif ($this->getStoreToken() && $this->getCreateToken()) {
+            $data['StoreToken'] = static::STORE_TOKEN_YES;
+            $data['CreateToken'] = static::CREATE_TOKEN_YES;
         }
 
         return $data;
